@@ -4,10 +4,11 @@ import com.alibaba.fastjson.JSON;
 import life.majiang.community.community.dto.AccessTokenDTO;
 import life.majiang.community.community.dto.GithubUser;
 import okhttp3.*;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
+@Component
 public class GithubProvider {
     public String getAccesstoken(AccessTokenDTO accessTokenDTO){
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
@@ -36,6 +37,7 @@ public class GithubProvider {
         try (Response response = client.newCall(request).execute()) {
             String string = response.body().string();
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
+            System.out.println(githubUser);
             return githubUser;
         } catch (IOException e) {
         }
